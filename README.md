@@ -4,8 +4,8 @@
 ### 알고리즘 커리큘럼 참고
 [PS 시작하기](https://plzrun.tistory.com/entry/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4PS-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0)
 ### JS로 알고리즘 풀기
-[자바스크립트로 풀만한 백준 문제](https://github.com/haesoo-y/baekjoon-for-js)
-[백준 자바스크립트 입출력 방법](https://wonyoung2257.tistory.com/36)
+[자바스크립트로 풀만한 백준 문제](https://github.com/haesoo-y/baekjoon-for-js)  
+[백준 자바스크립트 입출력 방법](https://wonyoung2257.tistory.com/36)  
 
 > 지금까지 푼 모든 알고리즘 문제를 올리진 않았습니다.
 > 코딩테스트 대비를 위해 프로그래머스에서 직접 코드를 작성한 경우가 많아서 모두 올리기엔 너무나 귀찮았음...
