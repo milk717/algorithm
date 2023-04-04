@@ -9,3 +9,4 @@ def solution(phone_book):
             if tmp in dic:
                 return False
     return True
+기
