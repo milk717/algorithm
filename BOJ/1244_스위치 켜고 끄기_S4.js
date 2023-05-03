@@ -20,9 +20,8 @@ for(let i = 0; i<m; i++){
             }
         }
     }else{
-        for (let j = 1; j * num < n; j++) {
+        for (let j = 1; j * num <= n; j++) {
             switchList[num*j - 1] = +!switchList[num*j - 1];
-            console.log(num*j - 1);
         }
     }
 }
@@ -31,7 +30,7 @@ let res = '';
 
 switchList.forEach((v,i)=>{
     res += v;
-    if(i && i%20 === 0){
+    if(i !== 0 && (i+1)%20 === 0){
         res += '\n';
     }else{
         res += ' ';
