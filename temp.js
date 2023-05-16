@@ -1,6 +1,12 @@
-const arr = new Array(3).fill(0);
-const arr2 = arr.map(v => v);
-const arr3 = arr.sort((a, b) => a - b);
+var a = 1;
+function outer(){
+    function inner(){
+        console.log(a);
+        var a = 3;
+    }
+    inner();
+    console.log(a);
+}
 
-arr[0] = 1
-console.log(arr,arr2,arr3)
+outer();
+console.log(a)
