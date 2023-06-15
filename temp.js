@@ -1,1 +1,5 @@
-console.log(this)
+["AAAAAA",
+"BBAATB",
+"BBAATB",
+"JJJTAA",
+"JJJTAA"]
