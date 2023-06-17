@@ -9,7 +9,7 @@ const modeInfo = {
     '1000': {name: 'Kanji', cntBits: 8},
     '0000': {name: 'Termination', cntBits: 0},
 };
-const alpha = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','<SP>','$','%','*','+','-','.','/',':'];
+const alpha = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' ','$','%','*','+','-','.','/',':'];
 const hexToBinary = (hex) => {
     let res = [];
     for(let i = 0; i < hex.length; i++){
@@ -69,8 +69,15 @@ const codeToText = (modeName,dataArr) => {
     let cnt = 0;
     switch (modeName){
         case 'Numeric':
+            // console.log(dataArr)
             for(let i = 0; i<dataArr.length; i++){
-                arr.push(binaryToDecimal(dataArr[i]).toString().padStart(3,'0'));
+                let temp = binaryToDecimal(dataArr[i]).toString();
+                if(dataArr[i].length === 10){
+                    temp = temp.padStart(3,'0');
+                }else if(dataArr[i].length === 7){
+                    temp = temp.padStart(2,'0');
+                }
+                arr.push(temp);
             }
             arr = arr.join('');
             cnt += arr.length;
@@ -99,7 +106,7 @@ const codeToText = (modeName,dataArr) => {
                     arr.push(String.fromCharCode(tempToDecimal));
                 }else{
                     arr.push('\\');
-                    arr.push(temp);
+                    arr.push(temp.padStart(2,'0'));
                 }
                 cnt++;
             }
@@ -110,17 +117,20 @@ const codeToText = (modeName,dataArr) => {
                 const binary = dataArr[i];
                 const temp = binaryToDecimal(binary.slice(1,binary.length)).toString(16).toUpperCase();
                 const tempToDecimal = parseInt(temp,16);
-                if(parseInt('20',16) <= tempToDecimal  && parseInt('7e',16) >= tempToDecimal){
-                    if(tempToDecimal === 35){
-                        arr.push('\\');
-                    }
-                    arr.push(binary[0]);
-                    arr.push(String.fromCharCode(tempToDecimal));
-                }else{
-                    arr.push('#');
-                    arr.push(binary[0]);
-                    arr.push(temp);
-                }
+                arr.push('#');
+                arr.push(binary[0]);
+                arr.push(temp.padStart(3,'0'));
+                // if(parseInt('20',16) <= tempToDecimal  && parseInt('7e',16) >= tempToDecimal){
+                //     if(tempToDecimal === 35){
+                //         arr.push('\\');
+                //     }
+                //     arr.push(binary[0]);
+                //     arr.push(String.fromCharCode(tempToDecimal));
+                // }else{
+                //     arr.push('#');
+                //     arr.push(binary[0]);
+                //     arr.push(temp);
+                // }
                 cnt++;
             }
             arr = arr.join('');
