@@ -69,7 +69,6 @@ const codeToText = (modeName,dataArr) => {
     let cnt = 0;
     switch (modeName){
         case 'Numeric':
-            // console.log(dataArr)
             for(let i = 0; i<dataArr.length; i++){
                 let temp = binaryToDecimal(dataArr[i]).toString();
                 if(dataArr[i].length === 10){
@@ -120,17 +119,6 @@ const codeToText = (modeName,dataArr) => {
                 arr.push('#');
                 arr.push(binary[0]);
                 arr.push(temp.padStart(3,'0'));
-                // if(parseInt('20',16) <= tempToDecimal  && parseInt('7e',16) >= tempToDecimal){
-                //     if(tempToDecimal === 35){
-                //         arr.push('\\');
-                //     }
-                //     arr.push(binary[0]);
-                //     arr.push(String.fromCharCode(tempToDecimal));
-                // }else{
-                //     arr.push('#');
-                //     arr.push(binary[0]);
-                //     arr.push(temp);
-                // }
                 cnt++;
             }
             arr = arr.join('');
@@ -142,7 +130,6 @@ const res = [];
 str.forEach((code,index)=>{
     const resText = [];
     let totalCnt = 0;
-    // console.log(index)
     let binary = hexToBinary(code);
     let i = 0;
     while (true){
@@ -154,10 +141,8 @@ str.forEach((code,index)=>{
         const charCnt = binaryToDecimal(nowMode.slice(4, 4+cntBits));
         const nextCodeIndex = calcDataLen(name, cntBits, charCnt);
         i+= nextCodeIndex;
-        // console.log(name, nowMode,charCnt)
         const dataCode = nowMode.slice(4+cntBits, nextCodeIndex);
         const codeArr = sliceData(name, charCnt,dataCode);
-        // console.log(name,codeArr)
         const [cnt,text] = codeToText(name, codeArr);
         totalCnt+=cnt;
         resText.push(text);

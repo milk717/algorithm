@@ -50,7 +50,7 @@ function solution(m, n, board) {
     let afterCnt = 0;
     let beforeCnt = -1;
     while(afterCnt !== beforeCnt){
-        beforeCnt = afterCnt;용
+        beforeCnt = afterCnt;
         board = popBlock(m,n,board);
         board = relocation(m,n,board);
         afterCnt = countNull(m,n,board);
