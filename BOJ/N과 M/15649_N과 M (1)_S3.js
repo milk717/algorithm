@@ -7,7 +7,7 @@ m= +m;
 //1~n까지의 수를 사용해서 m길이의 수열을 생성
 const makeSequence = (n, m, check, arr) =>{
     // console.log(n, m, check, arr)
-    if (m===0){
+    if (m===arr.length){
         console.log(arr.join(' '));
         // console.log(arr);
         return
@@ -16,7 +16,7 @@ const makeSequence = (n, m, check, arr) =>{
         if (!check[i]){
             check[i] = true;
             arr.push(i+1);
-            makeSequence(n, m-1, check, arr);
+            makeSequence(n, m, check, arr);
             check[i] = false;
             arr.pop()
         }
