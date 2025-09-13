@@ -26,6 +26,8 @@ def bfs(seleted_partition):
   for r, c in seleted_partition:
     board[r][c] = 1
 
+  safe_cnt = len(empty_place) - 3
+
   while len(dq):
     row, col = dq.popleft()
 
@@ -36,13 +38,8 @@ def bfs(seleted_partition):
       if 0 <= next_row < n and 0 <= next_col < m:
         if board[next_row][next_col] == 0:
           board[next_row][next_col] = 2
+          safe_cnt -= 1
           dq.append((next_row, next_col))
-
-  safe_cnt = 0
-  for i in range(n):
-    for j in range(m):
-      if board[i][j] == 0:
-        safe_cnt += 1
   
   return safe_cnt
 
