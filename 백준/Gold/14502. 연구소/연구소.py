@@ -11,17 +11,8 @@ empty_place = [(r, c) for r in range(n) for c in range(m) if arr[r][c] == 0]
 virus_place = [(r, c) for r in range(n) for c in range(m) if arr[r][c] == 2]
   
 def bfs(seleted_partition):
-  dq = deque()
-  board = []
-
-  for i in range(n):
-    board.append([])
-    for j in range(m):
-      data = arr[i][j]
-      board[i].append(data)
-
-      if data == 2:
-        dq.append((i, j))
+  dq = deque(virus_place)
+  board = [row[:] for row in arr]
 
   for r, c in seleted_partition:
     board[r][c] = 1
