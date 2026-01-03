@@ -1,44 +1,27 @@
-"""
-visited 체크하면서 1번 정점부터 n번 정점까지 start를 차례대로 지정하면서 순환 없는지 보기
-순환이 있는지 확인하려면 다음 노드의 visited가 이미 체크되어있는데, 또 방문하려는 경우 순환으로 판단
-순회는 dfs? bfs? bfs가 더 편하니까 bfs
-"""
-
 import sys
-from collections import defaultdict, deque
 
 input = sys.stdin.readline
 
 
-def is_tree(graph, start_node, visited):
-    dq = deque([(start_node, -1)])
-    visited.add(start_node)
-
-    has_cycle = False
-
-    while dq:
-        cur_node, parent = dq.popleft()
-
-        for nxt_node in graph[cur_node]:
-            if nxt_node not in visited:
-                dq.append((nxt_node, cur_node))
-                visited.add(nxt_node)
-            else:
-                if nxt_node != parent:
-                    has_cycle = True
-
-    return not has_cycle
+def find_lead(parents, x):
+    while parents[x] != x:
+        parents[x] = parents[parents[x]]
+        x = parents[x]
+    return parents[x]
 
 
-def count_tree(graph, n):
-    visited = set()
-    tree_cnt = 0
+def union(parents, x, y, cycle_group):
+    a = find_lead(parents, x)
+    b = find_lead(parents, y)
 
-    for node in range(1, n + 1):
-        if node not in visited:
-            tree_cnt += 1 if is_tree(graph, node, visited) else 0
-
-    return tree_cnt
+    if a == b:
+        cycle_group[a] = True
+    elif a < b:
+        parents[b] = a
+        cycle_group[a] = cycle_group[a] or cycle_group[b]
+    else:
+        parents[a] = b
+        cycle_group[b] = cycle_group[a] or cycle_group[b]
 
 
 def get_output_string(num):
@@ -53,7 +36,8 @@ def get_output_string(num):
 t = 0
 while True:
     n, m = map(int, input().split())
-    graph = defaultdict(list)
+    parents = list(range(n + 1))
+    cycle_group = [False] * (n + 1)
     t += 1
 
     if n == 0 and m == 0:
@@ -61,11 +45,17 @@ while True:
 
     for _ in range(1, m + 1):
         u, v = map(int, input().split())
+        union(parents, u, v, cycle_group)
 
-        graph[u].append(v)
-        graph[v].append(u)
+    # print(parents, cycle_group)
+    tree_cnt = 0
+    visited = set()
 
-    # print(graph)
-    tree_cnt = count_tree(graph, n)
+    for i in range(1, n + 1):
+        a = find_lead(parents, i)
+        if a not in visited:
+            visited.add(a)
+            if not cycle_group[a]:
+                tree_cnt += 1
 
     print(f"Case {t}: {get_output_string(tree_cnt)}")
