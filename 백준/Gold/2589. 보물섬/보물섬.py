@@ -10,46 +10,54 @@ from collections import deque
 
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
-
-
-def bfs(board, start):
-    visited = [[0] * m for _ in range(n)]
-    queue = deque([(*start, 0)])
-    visited[start[0]][start[1]] = 1
-
-    max_distance = 0
-
-    while queue:
-        cur_row, cur_col, distance = queue.popleft()
-
-        for dr, dc in [(-1, 0), (0, 1), (1, 0), (0, -1)]:
-            nxt_row, nxt_col = cur_row + dr, cur_col + dc
-
-            if (
-                0 <= nxt_row < n
-                and 0 <= nxt_col < m
-                and board[nxt_row][nxt_col] == "L"
-                and not visited[nxt_row][nxt_col]
-            ):
-                queue.append((nxt_row, nxt_col, distance + 1))
-                visited[nxt_row][nxt_col] = 1
-                max_distance = max(max_distance, distance + 1)
-
-    return max_distance
-
 
 def main():
-
-    board = [input().strip() for _ in range(n)]
-
-    res = 0
+    n, m = map(int, input().split())
+    graph = [input().rstrip() for _ in range(n)]
+    dyx = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+    visited = [[0] * m for _ in range(n)]
+    dist = 0
+    pos = []
     for i in range(n):
         for j in range(m):
-            if board[i][j] == "L":
-                res = max(bfs(board, (i, j)), res)
+            if graph[i][j] == "L" and not visited[i][j]:
+                visited[i][j] = 1
+                q = deque([(i, j, 0)])
+                while q:
+                    y, x, d = q.popleft()
+                    if d > dist:
+                        dist = d
+                        pos.append((y, x))
+                    for dy, dx in dyx:
+                        ny, nx = y + dy, x + dx
+                        if (
+                            0 <= nx < m
+                            and 0 <= ny < n
+                            and graph[ny][nx] == "L"
+                            and not visited[ny][nx]
+                        ):
+                            visited[ny][nx] = 1
+                            q.append((ny, nx, d + 1))
+    ans = 0
+    for i, j in pos:
+        visited = [[0] * m for _ in range(n)]
+        visited[i][j] = 1
+        q = deque([(i, j, 0)])
+        while q:
+            y, x, d = q.popleft()
+            if d > ans:
+                ans = d
+            for dy, dx in dyx:
+                ny, nx = y + dy, x + dx
+                if (
+                    0 <= nx < m
+                    and 0 <= ny < n
+                    and graph[ny][nx] == "L"
+                    and not visited[ny][nx]
+                ):
+                    visited[ny][nx] = 1
+                    q.append((ny, nx, d + 1))
+    print(ans)
 
-    return res
 
-
-print(main())
+main()
