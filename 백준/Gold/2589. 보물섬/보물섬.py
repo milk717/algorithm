@@ -1,10 +1,3 @@
-"""
-각 육지 탐색,
-각 칸별로 거리 측정?
-보드 전체 탐색 O(n^2) = 2500
-각 칸부터 출발해서 탐색한다고 하면 O(n^3) = 125,000
-"""
-
 import sys
 from collections import deque
 
